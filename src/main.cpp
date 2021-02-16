@@ -8,6 +8,9 @@
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Vision1              vision        1               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -24,6 +27,10 @@ vex::motor   LeftBackMotor= vex::motor(vex::PORT10, true);
 
 vex::motor   LeftSuction= vex::motor(vex::PORT18);
 vex::motor   RightSuction= vex::motor(vex::PORT17);
+
+vex::vision   Vision1 (vex::PORT1);
+
+
 
 
 
@@ -109,8 +116,27 @@ int main() {
   RightSuction.startRotateFor(vex::directionType::fwd, 1000, vex::rotationUnits::deg);
   LeftSuction.rotateFor(vex::directionType::rev, 1000, vex::rotationUnits::deg);
 
-  
+  while (true)
+{
+Brain.Screen.clearLine();
+Vision1.takeSnapshot(Vision1__SIG_1);
+if (Vision1.largestObject.exists)
+{
+Brain.Screen.print("Vision Sensor");
 
+}
+else
+{
+Brain.Screen.print("Vision Sensor: Color Signature Not Found!");
+}
+task::sleep(100);
+}
+
+
+
+
+
+  //while (Vision1.value() != Vision1.takeSnapshot(REDBALL);
 
 
   
